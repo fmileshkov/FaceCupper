@@ -223,9 +223,28 @@
                     <view key="view" contentMode="scaleToFill" id="E3r-Eb-0v6">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fEj-KF-rVM" customClass="CustomButton" customModule="FaceCupper" customModuleProvider="target">
+                                <rect key="frame" x="32" y="408.66666666666669" width="329" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <connections>
+                                    <action selector="pickFaceButtonTap:" destination="3h1-47-qIF" eventType="touchUpInside" id="Kkc-bH-IQb"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="hg6-v2-sJN"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="fEj-KF-rVM" firstAttribute="centerX" secondItem="E3r-Eb-0v6" secondAttribute="centerX" id="GLE-Ig-ecH"/>
+                            <constraint firstItem="fEj-KF-rVM" firstAttribute="centerY" secondItem="E3r-Eb-0v6" secondAttribute="centerY" id="KMu-y4-lZJ"/>
+                            <constraint firstItem="fEj-KF-rVM" firstAttribute="leading" secondItem="hg6-v2-sJN" secondAttribute="leading" constant="32" id="YeN-Jk-NN3"/>
+                            <constraint firstItem="hg6-v2-sJN" firstAttribute="trailing" secondItem="fEj-KF-rVM" secondAttribute="trailing" constant="32" id="a9j-zo-6cs"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="pickFaceFromGallery" destination="fEj-KF-rVM" id="hTW-d3-Frf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4tN-ak-Evg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

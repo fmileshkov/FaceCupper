@@ -7,12 +7,13 @@
 
 import UIKit
 
-class PhotoMainViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class PhotoMainViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     @IBOutlet private weak var choosePhotoFromGalleryButton: CustomButton!
     @IBOutlet private weak var takePhotoButton: CustomButton!
 
     var viewModel: PhotoMainViewModelProtocol?
+    private var picker: UIImagePickerController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,21 +23,17 @@ class PhotoMainViewController: UIViewController, UIImagePickerControllerDelegate
     }
 
     @IBAction func choosePhotoFromGalleryButtonTap(_ sender: UIButton) {
-        let picker = UIImagePickerController()
-                picker.sourceType = .photoLibrary
-                picker.delegate = self
-                present(picker, animated: true, completion: nil)
+        picker = UIImagePickerController()
+        picker?.sourceType = .photoLibrary
+        picker?.delegate = self
+        present(picker ?? UIImagePickerController(), animated: true, completion: nil)
     }
     
     @IBAction func takePhotoButtonTap(_ sender: UIButton) {
-        let picker = UIImagePickerController()
-                picker.sourceType = .camera
-                picker.delegate = self
-                present(picker, animated: true, completion: nil)
+        picker = UIImagePickerController()
+        picker?.sourceType = .camera
+        picker?.delegate = self
+        present(picker ?? UIImagePickerController(), animated: true, completion: nil)
     }
-    
-    private func showPhotoGallery() {
-            let photoGalleryView = AppPhotoGalleryView()
-            self.presentCustomView(photoGalleryView)
-        }
+
 }
