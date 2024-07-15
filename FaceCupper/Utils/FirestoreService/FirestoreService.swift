@@ -18,6 +18,8 @@ protocol FirestoreServiceProtocol {
     func fetchUser() async
     func uploadImage(image: UIImage)
     var currentUser: User? { get }
+    func fetchImages(folderPath: String) async throws -> [CuttedFaceImageModel]
+    func sortImagesByDate(_ images: [CuttedFaceImageModel]) -> [CuttedFaceImageModel]
 }
 
 struct User: Codable {
@@ -32,9 +34,9 @@ class FirestoreService: FirestoreServiceProtocol {
     static let shared = FirestoreService()
     private let firebaseAuth = Auth.auth()
     private let db = Firestore.firestore()
-    private var pics = [String]()
     private var images = [UIImage]()
     private var userSesion: FirebaseAuth.User?
+    private var imageUrls: [String] = []
     var currentUser: User?
     
     init() {
@@ -87,6 +89,64 @@ class FirestoreService: FirestoreServiceProtocol {
             print("User cant be created")
         }
     }
+    
+    func fetchImages(folderPath: String) async throws -> [CuttedFaceImageModel] {
+        let result = try await Storage.storage().reference().child(folderPath).listAll()
+        var imageModels = [CuttedFaceImageModel]()
+        for (index, item) in result.items.enumerated() {
+            let imageModel = try await item.downloadAndRenameImage(currentCount: index)
+            imageModels.append(imageModel)
+        }
+        return imageModels
+    }
+
+    func sortImagesByDate(_ images: [CuttedFaceImageModel]) -> [CuttedFaceImageModel] {
+        return images.sorted(by: { $0.dateUploaded < $1.dateUploaded })
+    }
+    
 }
 
+private extension StorageReference {
+    
+    func downloadAndRenameImage(currentCount: Int) async throws -> CuttedFaceImageModel {
+        let metadata = try await self.getMetadata()
+        guard let dateAdded = metadata.timeCreated else {
+            throw NSError(domain: "No metadata", code: -1, userInfo: nil)
+        }
+        
+        let url = try await self.downloadURL()
+        let displayName = "Face #\(currentCount + 1)"
+        return CuttedFaceImageModel(displayTitle: displayName, image: nil, dateUploaded: dateAdded, url: url)
+    }
+}
 
+extension StorageReference {
+    func getMetadata() async throws -> StorageMetadata {
+        try await withCheckedThrowingContinuation { continuation in
+            self.getMetadata { metadata, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else if let metadata = metadata {
+                    continuation.resume(returning: metadata)
+                } else {
+                    continuation.resume(throwing: NSError(domain: "Unknown error", code: -1, userInfo: nil))
+                }
+            }
+        }
+    }
+
+    func downloadURL() async throws -> URL {
+        try await withCheckedThrowingContinuation { continuation in
+            self.downloadURL { url, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else if let url = url {
+                    continuation.resume(returning: url)
+                } else {
+                    continuation.resume(throwing: NSError(domain: "Unknown error", code: -1, userInfo: nil))
+                }
+            }
+        }
+    }
+    
+}
