@@ -1,10 +1,3 @@
-//
-//  MainViewController.swift
-//  FaceCupper
-//
-//  Created by Admin on 6.05.24.
-//
-
 import UIKit
 
 class PhotoMainViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
@@ -17,9 +10,9 @@ class PhotoMainViewController: UIViewController, UIImagePickerControllerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Photo"
-        choosePhotoFromGalleryButton.customTitle = "Choose Photo From Gallery"
-        takePhotoButton.customTitle = "Take a photo with camera"
+        title = Constants.photoMainControllerTitle
+        choosePhotoFromGalleryButton.customTitle = Constants.choosePhotoFromGalleryTitle
+        takePhotoButton.customTitle = Constants.takePhotoWithCameraButtonTitle
     }
 
     @IBAction func choosePhotoFromGalleryButtonTap(_ sender: UIButton) {

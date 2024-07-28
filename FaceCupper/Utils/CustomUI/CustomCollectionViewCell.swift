@@ -1,31 +1,17 @@
-//
-//  PhotoGalleryView.swift
-//  FaceCupper
-//
-//  Created by Admin on 4.06.24.
-//
-
 import UIKit
-
-struct CuttedFaceImageModel {
-    var displayTitle: String
-    let image: UIImage?
-    let dateUploaded: Date
-    let url: URL
-}
 
 protocol CustomCollectionViewCellProtocol {
     
     associatedtype cellItem
     func configure(with model: CuttedFaceImageModel)
-    func selectedImage() -> UIImage
+    func setUpImage(with image: UIImage)
+    func setUpTitle(for title: String)
+    func fetchImage(with url: URL) -> UIImage
 }
 
 class CustomCollectionViewCell: UICollectionViewCell, CustomCollectionViewCellProtocol {
     
     typealias cellItem = CuttedFaceImageModel
-    
-    static let identifier = "CustomCollectionViewCell"
 
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -36,7 +22,7 @@ class CustomCollectionViewCell: UICollectionViewCell, CustomCollectionViewCellPr
 
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: ConstrainsAndAutolayConstants.customCellTitleLabelFont)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -50,12 +36,12 @@ class CustomCollectionViewCell: UICollectionViewCell, CustomCollectionViewCellPr
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.75),
+            imageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: ConstrainsAndAutolayConstants.customCellImageViewHeightAnchMultiplier),
 
-            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 4),
+            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: ConstrainsAndAutolayConstants.customCellTleLabelTopAnch),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2)
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: ConstrainsAndAutolayConstants.customCellTitleLabelBottomAnch)
         ])
     }
 
@@ -63,14 +49,22 @@ class CustomCollectionViewCell: UICollectionViewCell, CustomCollectionViewCellPr
         super.init(coder: coder)
     }
 
-    func selectedImage() -> UIImage {
-        guard let image = imageView.image else {
-            return UIImage()
+    func setUpImage(with image: UIImage) {
+        DispatchQueue.main.async {
+            self.imageView.image = image
         }
+    }
+    
+    func setUpTitle(for title: String) {
+        titleLabel.text = title
+    }
+    
+    func fetchImage(with url: URL) -> UIImage {
+        guard let image = imageView.image else { return UIImage() }
         
         return image
     }
-
+    
     func configure(with model: CuttedFaceImageModel) {
         URLSession.shared.dataTask(with: model.url) { [weak self] data, response, error in
             guard let self = self, let data = data, error == nil else {

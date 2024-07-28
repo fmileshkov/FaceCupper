@@ -1,10 +1,3 @@
-//
-//  AddTextViewModel.swift
-//  FaceCupper
-//
-//  Created by Admin on 10.05.24.
-//
-
 import Foundation
 
 protocol ProfileViewModelProtocol {

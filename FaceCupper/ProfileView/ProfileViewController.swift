@@ -1,10 +1,3 @@
-//
-//  AddTextViewController.swift
-//  FaceCupper
-//
-//  Created by Admin on 6.05.24.
-//
-
 import UIKit
 
 class ProfileViewController: UIViewController {
@@ -13,7 +6,7 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Add text"
+        title = "Profile"
     }
 
 }

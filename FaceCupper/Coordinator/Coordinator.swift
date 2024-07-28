@@ -1,10 +1,3 @@
-//
-//  Coordinator.swift
-//  FaceCupper
-//
-//  Created by Admin on 13.04.24.
-//
-
 import Foundation
 
 public protocol CoordinatableViewModel {

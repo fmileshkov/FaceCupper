@@ -1,11 +1,5 @@
-//
-//  FirestoreService.swift
-//  FaceCupper
-//
-//  Created by Admin on 24.04.24.
-//
-
 import UIKit
+import Combine
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
@@ -18,8 +12,9 @@ protocol FirestoreServiceProtocol {
     func fetchUser() async
     func uploadImage(image: UIImage)
     var currentUser: User? { get }
-    func fetchImages(folderPath: String) async throws -> [CuttedFaceImageModel]
-    func sortImagesByDate(_ images: [CuttedFaceImageModel]) -> [CuttedFaceImageModel]
+//    func fetchImages(folderPath: String) async throws -> [CuttedFaceImageModel]
+//    func sortImagesByDate(_ images: [CuttedFaceImageModel]) -> [CuttedFaceImageModel]
+    func fetchImagesWithCombine(folderPath: String) -> AnyPublisher<[CuttedFaceImageModel], Error>
 }
 
 struct User: Codable {
@@ -31,16 +26,18 @@ struct User: Codable {
 class FirestoreService: FirestoreServiceProtocol {
     
     //MARK: - Properties
-    static let shared = FirestoreService()
+    static let shared: FirestoreServiceProtocol = FirestoreService()
     private let firebaseAuth = Auth.auth()
     private let db = Firestore.firestore()
     private var images = [UIImage]()
     private var userSesion: FirebaseAuth.User?
     private var imageUrls: [String] = []
+    private var cancellables = Set<AnyCancellable>()
     var currentUser: User?
+    private let lastSyncKey = "lastSync"
     
     init() {
-
+        
     }
     
     func uploadImage(image: UIImage) {
@@ -56,7 +53,7 @@ class FirestoreService: FirestoreServiceProtocol {
             guard error == nil && metaData != nil else {
                 return
             }
-        
+            
             self?.db.collection("userImages").document().setData(["url":path])
         }
     }
@@ -89,64 +86,121 @@ class FirestoreService: FirestoreServiceProtocol {
             print("User cant be created")
         }
     }
-    
-    func fetchImages(folderPath: String) async throws -> [CuttedFaceImageModel] {
-        let result = try await Storage.storage().reference().child(folderPath).listAll()
-        var imageModels = [CuttedFaceImageModel]()
-        for (index, item) in result.items.enumerated() {
-            let imageModel = try await item.downloadAndRenameImage(currentCount: index)
-            imageModels.append(imageModel)
+
+    func fetchImages(folderPath: String, url: String) -> AnyPublisher<[CuttedFaceImageModel], Error> {
+        return fetchImagesWithCombine(folderPath: folderPath).catch { error in
+            return ImageCacheManager.shared.loadImage(for: url)
         }
-        return imageModels
-    }
-
-    func sortImagesByDate(_ images: [CuttedFaceImageModel]) -> [CuttedFaceImageModel] {
-        return images.sorted(by: { $0.dateUploaded < $1.dateUploaded })
     }
     
-}
+    func fetchImagesWithCombine(folderPath: String) -> AnyPublisher<[CuttedFaceImageModel], Error> {
+        let folderRef = Storage.storage().reference().child(folderPath)
 
-private extension StorageReference {
-    
-    func downloadAndRenameImage(currentCount: Int) async throws -> CuttedFaceImageModel {
-        let metadata = try await self.getMetadata()
-        guard let dateAdded = metadata.timeCreated else {
-            throw NSError(domain: "No metadata", code: -1, userInfo: nil)
+        return Future<[CuttedFaceImageModel], Error> { promise in
+            folderRef.listAll { result, error in
+                guard error == nil, let result else {
+                    return promise(.failure(error!))
+                }
+
+                let publishers = result.items.enumerated().map { index, item in
+                    self.downloadAndRenameImageWithCombine(item: item, currentCount: index)
+                }
+
+                Publishers.MergeMany(publishers)
+                    .collect()
+                    .sink(receiveCompletion: { completion in
+                        if case let .failure(error) = completion {
+                            promise(.failure(error))
+                        }
+                    }, receiveValue: { imageModels in
+                        promise(.success(imageModels))
+                    })
+                    .store(in: &self.cancellables)
+
+            }
         }
-        
-        let url = try await self.downloadURL()
-        let displayName = "Face #\(currentCount + 1)"
-        return CuttedFaceImageModel(displayTitle: displayName, image: nil, dateUploaded: dateAdded, url: url)
+        .eraseToAnyPublisher()
     }
-}
 
-extension StorageReference {
-    func getMetadata() async throws -> StorageMetadata {
-        try await withCheckedThrowingContinuation { continuation in
-            self.getMetadata { metadata, error in
+    private func downloadAndRenameImageWithCombine(item: StorageReference, currentCount: Int) -> AnyPublisher<CuttedFaceImageModel, Error> {
+        return Future<CuttedFaceImageModel, Error> { promise in
+            item.getMetadata { metadata, error in
                 if let error = error {
-                    continuation.resume(throwing: error)
-                } else if let metadata = metadata {
-                    continuation.resume(returning: metadata)
+                    promise(.failure(error))
+                } else if let metadata = metadata, let dateAdded = metadata.timeCreated {
+                    item.downloadURL { url, error in
+                        if let error = error {
+                            promise(.failure(error))
+                        } else if let url = url {
+                            let displayName = "Picture #\(currentCount + 1)"
+                            let model = CuttedFaceImageModel(displayTitle: displayName, dateUploaded: dateAdded, url: url)
+                            promise(.success(model))
+                        }
+                    }
                 } else {
-                    continuation.resume(throwing: NSError(domain: "Unknown error", code: -1, userInfo: nil))
+                    promise(.failure(NSError(domain: "No metadata", code: -1, userInfo: nil)))
                 }
             }
         }
-    }
-
-    func downloadURL() async throws -> URL {
-        try await withCheckedThrowingContinuation { continuation in
-            self.downloadURL { url, error in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                } else if let url = url {
-                    continuation.resume(returning: url)
-                } else {
-                    continuation.resume(throwing: NSError(domain: "Unknown error", code: -1, userInfo: nil))
-                }
-            }
-        }
+        .eraseToAnyPublisher()
     }
     
+//    func fetchImages(folderPath: String) async throws -> [CuttedFaceImageModel] {
+//        let result = try await Storage.storage().reference().child(folderPath).listAll()
+//        var imageModels = [CuttedFaceImageModel]()
+//        for (index, item) in result.items.enumerated() {
+//            let imageModel = try await item.downloadAndRenameImage(currentCount: index)
+//            imageModels.append(imageModel)
+//        }
+//        return imageModels
+//    }
+//
+//    func sortImagesByDate(_ images: [CuttedFaceImageModel]) -> [CuttedFaceImageModel] {
+//        return images.sorted(by: { $0.dateUploaded < $1.dateUploaded })
+//    }
 }
+
+//private extension StorageReference {
+//
+//    func downloadAndRenameImage(currentCount: Int) async throws -> CuttedFaceImageModel {
+//        let metadata = try await self.getMetadata()
+//        guard let dateAdded = metadata.timeCreated else {
+//            throw NSError(domain: "No metadata", code: -1, userInfo: nil)
+//        }
+//
+//        let url = try await self.downloadURL()
+//        let displayName = "Face #\(currentCount + 1)"
+//        return CuttedFaceImageModel(displayTitle: displayName, dateUploaded: dateAdded, url: url)
+//    }
+//}
+//
+//extension StorageReference {
+//    func getMetadata() async throws -> StorageMetadata {
+//        try await withCheckedThrowingContinuation { continuation in
+//            self.getMetadata { metadata, error in
+//                if let error = error {
+//                    continuation.resume(throwing: error)
+//                } else if let metadata = metadata {
+//                    continuation.resume(returning: metadata)
+//                } else {
+//                    continuation.resume(throwing: NSError(domain: "Unknown error", code: -1, userInfo: nil))
+//                }
+//            }
+//        }
+//    }
+//
+//    func downloadURL() async throws -> URL {
+//        try await withCheckedThrowingContinuation { continuation in
+//            self.downloadURL { url, error in
+//                if let error = error {
+//                    continuation.resume(throwing: error)
+//                } else if let url = url {
+//                    continuation.resume(returning: url)
+//                } else {
+//                    continuation.resume(throwing: NSError(domain: "Unknown error", code: -1, userInfo: nil))
+//                }
+//            }
+//        }
+//    }
+//
+//}

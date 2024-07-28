@@ -27,6 +27,8 @@
 		84447B0C2BEE0327007D6C87 /* FaceMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84447B0B2BEE0327007D6C87 /* FaceMainViewModel.swift */; };
 		84447B0E2BEE0369007D6C87 /* FaceMainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84447B0D2BEE0369007D6C87 /* FaceMainCoordinator.swift */; };
 		844DFE4C2BD5B91B00BD21AB /* UINaviationController+StoryBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844DFE4B2BD5B91B00BD21AB /* UINaviationController+StoryBoard.swift */; };
+		845A31D02C45D280003E4B76 /* CuttedFaceImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A31CF2C45D280003E4B76 /* CuttedFaceImageModel.swift */; };
+		845A31D22C471EE4003E4B76 /* CustomPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A31D12C471EE4003E4B76 /* CustomPickerViewController.swift */; };
 		847BD04F2BCB219200070656 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847BD04E2BCB219200070656 /* AppDelegate.swift */; };
 		847BD0512BCB219200070656 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847BD0502BCB219200070656 /* SceneDelegate.swift */; };
 		847BD0532BCB219200070656 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847BD0522BCB219200070656 /* LogInViewController.swift */; };
@@ -41,7 +43,8 @@
 		8481348B2BF01AF2001424C0 /* TabBarPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8481348A2BF01AF2001424C0 /* TabBarPages.swift */; };
 		8481348E2C07D4A1001424C0 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8481348D2C07D4A1001424C0 /* InputView.swift */; };
 		848134912C0A7D3C001424C0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848134902C0A7D3C001424C0 /* Constants.swift */; };
-		84EF58472C0E70D6002CEDE6 /* AppPhotoGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EF58462C0E70D6002CEDE6 /* AppPhotoGalleryView.swift */; };
+		84B3636B2C49D2BC00698DF6 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B3636A2C49D2BC00698DF6 /* ImageCacheManager.swift */; };
+		84EF58472C0E70D6002CEDE6 /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EF58462C0E70D6002CEDE6 /* CustomCollectionViewCell.swift */; };
 		84EF58492C0E7509002CEDE6 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EF58482C0E7509002CEDE6 /* CustomButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +82,8 @@
 		84447B0B2BEE0327007D6C87 /* FaceMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceMainViewModel.swift; sourceTree = "<group>"; };
 		84447B0D2BEE0369007D6C87 /* FaceMainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceMainCoordinator.swift; sourceTree = "<group>"; };
 		844DFE4B2BD5B91B00BD21AB /* UINaviationController+StoryBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINaviationController+StoryBoard.swift"; sourceTree = "<group>"; };
+		845A31CF2C45D280003E4B76 /* CuttedFaceImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuttedFaceImageModel.swift; sourceTree = "<group>"; };
+		845A31D12C471EE4003E4B76 /* CustomPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPickerViewController.swift; sourceTree = "<group>"; };
 		847BD04B2BCB219200070656 /* FaceCupper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceCupper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		847BD04E2BCB219200070656 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		847BD0502BCB219200070656 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -97,7 +102,8 @@
 		8481348A2BF01AF2001424C0 /* TabBarPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPages.swift; sourceTree = "<group>"; };
 		8481348D2C07D4A1001424C0 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		848134902C0A7D3C001424C0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		84EF58462C0E70D6002CEDE6 /* AppPhotoGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPhotoGalleryView.swift; sourceTree = "<group>"; };
+		84B3636A2C49D2BC00698DF6 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
+		84EF58462C0E70D6002CEDE6 /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
 		84EF58482C0E7509002CEDE6 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -134,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				84447AEF2BD930A8007D6C87 /* FirestoreService.swift */,
+				84B3636A2C49D2BC00698DF6 /* ImageCacheManager.swift */,
 			);
 			path = FirestoreService;
 			sourceTree = "<group>";
@@ -193,6 +200,14 @@
 			path = Extentions;
 			sourceTree = "<group>";
 		};
+		845A31CE2C45D26D003E4B76 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				845A31CF2C45D280003E4B76 /* CuttedFaceImageModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		847BD0422BCB219100070656 = {
 			isa = PBXGroup;
 			children = (
@@ -218,12 +233,13 @@
 				847BD04E2BCB219200070656 /* AppDelegate.swift */,
 				847BD0502BCB219200070656 /* SceneDelegate.swift */,
 				844DFE4D2BD5B93700BD21AB /* Utils */,
+				845A31CE2C45D26D003E4B76 /* Model */,
 				847BD0822BCB23AB00070656 /* Coordinator */,
 				84447B082BEE0292007D6C87 /* LogInView */,
 				84447B092BEE02A6007D6C87 /* TabBarView */,
 				84447B0A2BEE02B9007D6C87 /* PhotoView */,
 				84447B0F2BEE0419007D6C87 /* FaceView */,
-				848134892BEE06D6001424C0 /* AddТextView */,
+				848134892BEE06D6001424C0 /* ProfileView */,
 				8437C7442BD5BF5F002244E4 /* RegisterViewController.swift */,
 				847BD0832BCB23D100070656 /* VIew */,
 				847BD05C2BCB219600070656 /* Info.plist */,
@@ -265,21 +281,22 @@
 			path = VIew;
 			sourceTree = "<group>";
 		};
-		848134892BEE06D6001424C0 /* AddТextView */ = {
+		848134892BEE06D6001424C0 /* ProfileView */ = {
 			isa = PBXGroup;
 			children = (
 				84447AF92BE90480007D6C87 /* ProfileViewController.swift */,
 				848134872BEE062B001424C0 /* ProfileViewModel.swift */,
 			);
-			path = "AddТextView";
+			path = ProfileView;
 			sourceTree = "<group>";
 		};
 		8481348C2C07D47C001424C0 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
 				8481348D2C07D4A1001424C0 /* InputView.swift */,
-				84EF58462C0E70D6002CEDE6 /* AppPhotoGalleryView.swift */,
+				84EF58462C0E70D6002CEDE6 /* CustomCollectionViewCell.swift */,
 				84EF58482C0E7509002CEDE6 /* CustomButton.swift */,
+				845A31D12C471EE4003E4B76 /* CustomPickerViewController.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -435,8 +452,9 @@
 			files = (
 				848134912C0A7D3C001424C0 /* Constants.swift in Sources */,
 				84447B072BE93048007D6C87 /* PhotoMainCoordinator.swift in Sources */,
+				84B3636B2C49D2BC00698DF6 /* ImageCacheManager.swift in Sources */,
 				84EF58492C0E7509002CEDE6 /* CustomButton.swift in Sources */,
-				84EF58472C0E70D6002CEDE6 /* AppPhotoGalleryView.swift in Sources */,
+				84EF58472C0E70D6002CEDE6 /* CustomCollectionViewCell.swift in Sources */,
 				847BD07F2BCB237300070656 /* Coordinator.swift in Sources */,
 				848134862BEE05E0001424C0 /* ProfileCoordinator.swift in Sources */,
 				847BD0532BCB219200070656 /* LogInViewController.swift in Sources */,
@@ -446,7 +464,9 @@
 				8437C7452BD5BF5F002244E4 /* RegisterViewController.swift in Sources */,
 				844DFE4C2BD5B91B00BD21AB /* UINaviationController+StoryBoard.swift in Sources */,
 				84447B0E2BEE0369007D6C87 /* FaceMainCoordinator.swift in Sources */,
+				845A31D02C45D280003E4B76 /* CuttedFaceImageModel.swift in Sources */,
 				847BD0812BCB239100070656 /* AppCoordinator.swift in Sources */,
+				845A31D22C471EE4003E4B76 /* CustomPickerViewController.swift in Sources */,
 				84447AF02BD930A8007D6C87 /* FirestoreService.swift in Sources */,
 				84447AF42BE8CEBA007D6C87 /* PhotoMainViewController.swift in Sources */,
 				847BD04F2BCB219200070656 /* AppDelegate.swift in Sources */,

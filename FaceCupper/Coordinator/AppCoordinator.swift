@@ -1,10 +1,3 @@
-//
-//  AppCoordinator.swift
-//  FaceCupper
-//
-//  Created by Admin on 13.04.24.
-//
-
 import UIKit
 
 //MARK: - AppCoordinatorProtocol
@@ -27,7 +20,7 @@ class AppCoordinator: Coordinator, AppCoordinatorProtocol {
 
     //MARK: - Methods
     override func start() {
-        identifier = "AppCoordinator"
+        identifier = Constants.appCoordinatorIdentifier
         parentCoordinator = self
         showLoginFlow()
     }

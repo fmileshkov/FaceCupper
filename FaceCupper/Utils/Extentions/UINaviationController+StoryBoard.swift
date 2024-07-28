@@ -1,10 +1,3 @@
-//
-//  UINaviationController+StoryBoard.swift
-//  FaceCupper
-//
-//  Created by Admin on 22.04.24.
-//
-
 import UIKit
 
 //MARK: - Conveniece initalizer extension for ViweController

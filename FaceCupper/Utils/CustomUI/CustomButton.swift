@@ -1,16 +1,8 @@
-//
-//  CustomButton.swift
-//  FaceCupper
-//
-//  Created by Admin on 4.06.24.
-//
-
 import UIKit
 
 class CustomButton: UIButton {
-    
-    // Custom properties for corner radius and background color
-    var cornerRadius: CGFloat = 10.0 {
+
+    var cornerRadius: CGFloat = ConstrainsAndAutolayConstants.customButtonCornerRadius {
         didSet {
             self.layer.cornerRadius = cornerRadius
         }
@@ -43,7 +35,7 @@ class CustomButton: UIButton {
         self.backgroundColor = customBackgroundColor
         self.setTitle(customTitle, for: .normal)
         self.setTitleColor(.white, for: .normal)
-        self.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        self.titleLabel?.font = UIFont.systemFont(ofSize: ConstrainsAndAutolayConstants.customButtonTitleLabelFontOfSize, weight: .semibold)
     }
     
     override func prepareForInterfaceBuilder() {

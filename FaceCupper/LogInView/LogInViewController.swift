@@ -1,12 +1,4 @@
-//
-//  ViewController.swift
-//  FaceCupper
-//
-//  Created by Admin on 13.04.24.
-//
-
 import UIKit
-import SwiftUI
 
 class LogInViewController: UIViewController {
 
@@ -33,10 +25,5 @@ class LogInViewController: UIViewController {
             await viewModel?.logInUser(userName: usernameInputView.titleTextField.text!, password: passwordInputView.titleTextField.text!)
         }
     }
-//    @IBAction func loginButtonTap(_ sender: UIButton) {
-//        Task {
-//            await viewModel?.logInUser(userName: usernameInputView.titleTextField.text!, password: passwordInputView.titleTextField.text!)
-//        }
-//    }
 
 }

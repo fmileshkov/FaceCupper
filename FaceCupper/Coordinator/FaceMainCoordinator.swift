@@ -1,10 +1,3 @@
-//
-//  FaceMainCoordinator.swift
-//  FaceCupper
-//
-//  Created by Admin on 10.05.24.
-//
-
 import UIKit
 
 protocol FaceMainCoordinatorProtocol: NSObject {

@@ -1,10 +1,3 @@
-//
-//  LogInCoordinator.swift
-//  FaceCupper
-//
-//  Created by Admin on 6.05.24.
-//
-
 import UIKit
 
 protocol LogInCoordinatorProtocol: NSObject {
@@ -26,7 +19,7 @@ class LogInCoordinator: Coordinator, LogInCoordinatorProtocol {
     override func start() {
         guard let logInVC = LogInViewController.initFromStoryBoard() else { return }
         
-        identifier = "loginCoordinatorId"
+        identifier = Constants.loginCoordinatorIdentifier
         logInVC.viewModel = LogInViewModel(coordinator: self, firebase: FirestoreService())
         navController.pushViewController(logInVC, animated: false)
     }

@@ -1,10 +1,3 @@
-//
-//  TabBarPages.swift
-//  FaceCupper
-//
-//  Created by Admin on 12.05.24.
-//
-
 import UIKit
 
 enum TabBarPage {
@@ -28,11 +21,11 @@ enum TabBarPage {
     func pageTitleValue() -> String {
         switch self {
         case .face:
-            return "Face"
+            return Constants.facePageTitle
         case .photos:
-            return "Photos"
+            return Constants.photosPageTitle
         case .profile:
-            return "Profile"
+            return Constants.profilePageTitle
         }
     }
 

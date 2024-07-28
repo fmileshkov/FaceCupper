@@ -1,10 +1,3 @@
-//
-//  TabBarCoordinator.swift
-//  FaceCupper
-//
-//  Created by Admin on 6.05.24.
-//
-
 import UIKit
 
 protocol TabBarCoordinatorProtocol: NSObject {
@@ -25,8 +18,8 @@ class TabBarCoordinator: Coordinator, TabBarCoordinatorProtocol {
         let controllers: [UINavigationController] = pages.map({ getTabController($0) })
         
         prepareTabBarController(withTabControllers: controllers)
-        identifier = "tabBarCoordinatorId"
-        parentCoordinator?.childCoordinators.removeAll {$0.identifier == "loginCoordinatorId"}
+        identifier = Constants.tabBarCoordinatorIdentifier
+        parentCoordinator?.childCoordinators.removeAll {$0.identifier == Constants.loginCoordinatorIdentifier}
     }
     
     private func prepareTabBarController(withTabControllers tabControllers: [UIViewController]) {

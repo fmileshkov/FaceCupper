@@ -1,10 +1,3 @@
-//
-//  TabBarController.swift
-//  FaceCupper
-//
-//  Created by Admin on 6.05.24.
-//
-
 import UIKit
 
 class TabBarController: UITabBarController, UITabBarControllerDelegate {
@@ -14,7 +7,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
-        title = "Tabbar"
+        title = Constants.tabBarControllerTitle
         tabBar.tintColor = .systemIndigo
         tabBar.backgroundColor = .systemGray3
         tabBar.unselectedItemTintColor = .darkGray

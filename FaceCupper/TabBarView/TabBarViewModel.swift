@@ -1,10 +1,3 @@
-//
-//  TabBarViewModel.swift
-//  FaceCupper
-//
-//  Created by Admin on 6.05.24.
-//
-
 import Foundation
 
 import Foundation

@@ -1,12 +1,4 @@
-//
-//  RegisterViewController.swift
-//  FaceCupper
-//
-//  Created by Admin on 22.04.24.
-//
-
 import UIKit
-import SwiftUI
 
 class RegisterViewController: UIViewController {
     

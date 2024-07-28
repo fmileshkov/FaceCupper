@@ -1,10 +1,3 @@
-//
-//  InputView.swift
-//  FaceCupper
-//
-//  Created by Admin on 30.05.24.
-//
-
 import UIKit
 
 class InputView: UIView {
@@ -56,16 +49,16 @@ class InputView: UIView {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            textLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            textLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            textLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
+            textLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: ConstrainsAndAutolayConstants.inputViewTextLabelTopAnch),
+            textLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: ConstrainsAndAutolayConstants.inputViewTextLabelLeadingAnch),
+            textLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: ConstrainsAndAutolayConstants.inputViewTextLabelTrailingAnch)
         ])
 
         NSLayoutConstraint.activate([
-            titleTextField.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 10),
-            titleTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            titleTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            titleTextField.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20)
+            titleTextField.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: ConstrainsAndAutolayConstants.inputViewtitleTextFieldTopAnch),
+            titleTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: ConstrainsAndAutolayConstants.inputViewtitleTextFieldLeadingAnch),
+            titleTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: ConstrainsAndAutolayConstants.inputViewtitleTextFieldTrailingAnch),
+            titleTextField.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: ConstrainsAndAutolayConstants.inputViewtitleTextFieldBottomAnch)
         ])
     }
     
