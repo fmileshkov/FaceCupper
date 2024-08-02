@@ -99,6 +99,13 @@ extension CustomImagePickerViewController: UICollectionViewDataSource, UICollect
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CustomCollectionViewCell else {
+            return
+        }
+        
+        let imageSaver = ImageSaver()
+        let image = cell.fetchImage(with: images[indexPath.item].url)
+        imageSaver.saveImageToAlbum(image: image, albumName: "FaceCupper")
         delegate?.customImagePicker(self, didSelectImage: images[indexPath.item])
     }
 }

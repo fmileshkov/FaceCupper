@@ -1,4 +1,6 @@
 import UIKit
+import SwiftData
+import Photos
 
 class ImageCacheManager {
     
@@ -35,4 +37,5 @@ class ImageCacheManager {
         }
         print("No cached image found for URL: \(url)")
     }
+    
 }

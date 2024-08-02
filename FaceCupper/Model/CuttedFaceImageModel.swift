@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 struct CuttedFaceImageModel: Codable {
     var displayTitle: String

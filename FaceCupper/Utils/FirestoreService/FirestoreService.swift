@@ -86,12 +86,6 @@ class FirestoreService: FirestoreServiceProtocol {
             print("User cant be created")
         }
     }
-
-    func fetchImages(folderPath: String, url: String) -> AnyPublisher<[CuttedFaceImageModel], Error> {
-        return fetchImagesWithCombine(folderPath: folderPath).catch { error in
-            return ImageCacheManager.shared.loadImage(for: url)
-        }
-    }
     
     func fetchImagesWithCombine(folderPath: String) -> AnyPublisher<[CuttedFaceImageModel], Error> {
         let folderRef = Storage.storage().reference().child(folderPath)
