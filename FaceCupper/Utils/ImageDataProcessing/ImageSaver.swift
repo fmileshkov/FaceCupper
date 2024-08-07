@@ -7,7 +7,6 @@ class ImageSaver: NSObject {
     
     func saveImageToAlbum(image: UIImage, albumName: String) {
         PHPhotoLibrary.shared().performChanges({
-            // Create a new album if it doesn't exist
             let fetchOptions = PHFetchOptions()
             fetchOptions.predicate = NSPredicate(format: "title = %@", albumName)
             let album = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)

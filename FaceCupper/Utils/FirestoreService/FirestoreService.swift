@@ -12,6 +12,8 @@ protocol FirestoreServiceProtocol {
     func fetchUser() async
     func uploadImage(image: UIImage)
     var currentUser: User? { get }
+    func fetchImages(folderPath: String) -> AnyPublisher<[CuttedFaceImageModel], Error>
+    func getOffline() -> AnyPublisher<[CuttedFaceImageModel], Error>
 //    func fetchImages(folderPath: String) async throws -> [CuttedFaceImageModel]
 //    func sortImagesByDate(_ images: [CuttedFaceImageModel]) -> [CuttedFaceImageModel]
     func fetchImagesWithCombine(folderPath: String) -> AnyPublisher<[CuttedFaceImageModel], Error>
@@ -35,6 +37,7 @@ class FirestoreService: FirestoreServiceProtocol {
     private var cancellables = Set<AnyCancellable>()
     var currentUser: User?
     private let lastSyncKey = "lastSync"
+    private let imageCaching = ImageCachingWithCombine.shared
     
     init() {
         
@@ -87,6 +90,19 @@ class FirestoreService: FirestoreServiceProtocol {
         }
     }
     
+    func getOffline() -> AnyPublisher<[CuttedFaceImageModel], Error> {
+        return imageCaching.receiveImagesOffline().eraseToAnyPublisher()
+    }
+    
+    func fetchImages(folderPath: String) -> AnyPublisher<[CuttedFaceImageModel], Error> {
+        let offlinePublisher = imageCaching.receiveImagesOffline()
+        let onlinePublisher = fetchImagesWithCombine(folderPath: folderPath)
+
+        return offlinePublisher
+            .catch { _ in onlinePublisher }
+            .eraseToAnyPublisher()
+    }
+
     func fetchImagesWithCombine(folderPath: String) -> AnyPublisher<[CuttedFaceImageModel], Error> {
         let folderRef = Storage.storage().reference().child(folderPath)
 
@@ -98,19 +114,22 @@ class FirestoreService: FirestoreServiceProtocol {
 
                 let publishers = result.items.enumerated().map { index, item in
                     self.downloadAndRenameImageWithCombine(item: item, currentCount: index)
+                        .mapError { $0 as Error }
                 }
 
                 Publishers.MergeMany(publishers)
                     .collect()
                     .sink(receiveCompletion: { completion in
-                        if case let .failure(error) = completion {
+                        switch completion {
+                        case .failure(let error):
                             promise(.failure(error))
+                        case .finished:
+                            break
                         }
                     }, receiveValue: { imageModels in
                         promise(.success(imageModels))
                     })
                     .store(in: &self.cancellables)
-
             }
         }
         .eraseToAnyPublisher()

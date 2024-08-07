@@ -66,17 +66,24 @@ class CustomCollectionViewCell: UICollectionViewCell, CustomCollectionViewCellPr
     }
     
     func configure(with model: CuttedFaceImageModel) {
-        URLSession.shared.dataTask(with: model.url) { [weak self] data, response, error in
-            guard let self = self, let data = data, error == nil else {
-                return
+        if let cachedData = ImageCachingWithCombine.shared.getCachedImageData(for: model.url) {
+            self.imageView.image = UIImage(data: cachedData)
+        } else {
+            URLSession.shared.dataTask(with: model.url) { [weak self] data, response, error in
+                guard let self = self, let data = data, error == nil else {
+                    return
+                }
+
+                // Cache the downloaded data
+                ImageCachingWithCombine.shared.cacheImageData(data, for: model.url)
+                
+                DispatchQueue.main.async {
+                    self.imageView.image = UIImage(data: data)
+                }
             }
-            
-            DispatchQueue.main.async {
-                self.imageView.image = UIImage(data: data)
-            }
+            .resume()
         }
-        .resume()
-        
+
         titleLabel.text = model.displayTitle
     }
     

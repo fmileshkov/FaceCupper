@@ -1,6 +1,4 @@
 import UIKit
-import SwiftData
-import Photos
 
 class ImageCacheManager {
     

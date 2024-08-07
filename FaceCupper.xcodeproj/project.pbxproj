@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0B88EF7B2C5D885D00395BC0 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B88EF7A2C5D885D00395BC0 /* Photos.framework */; };
 		0B88EF7E2C5D969900395BC0 /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B88EF7D2C5D969900395BC0 /* ImageSaver.swift */; };
+		0B88EF812C5EEAAB00395BC0 /* ImageCachingWithCombine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B88EF802C5EEAAB00395BC0 /* ImageCachingWithCombine.swift */; };
+		0B88EF832C5EEB6300395BC0 /* CachingKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B88EF822C5EEB6300395BC0 /* CachingKeys.swift */; };
 		8437C7452BD5BF5F002244E4 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8437C7442BD5BF5F002244E4 /* RegisterViewController.swift */; };
 		84447AE42BD8F98F007D6C87 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84447AE32BD8F98F007D6C87 /* GoogleService-Info.plist */; };
 		84447AE72BD906D4007D6C87 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 84447AE62BD906D4007D6C87 /* FirebaseAuth */; };
@@ -70,6 +72,8 @@
 /* Begin PBXFileReference section */
 		0B88EF7A2C5D885D00395BC0 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		0B88EF7D2C5D969900395BC0 /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
+		0B88EF802C5EEAAB00395BC0 /* ImageCachingWithCombine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCachingWithCombine.swift; sourceTree = "<group>"; };
+		0B88EF822C5EEB6300395BC0 /* CachingKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachingKeys.swift; sourceTree = "<group>"; };
 		8437C7442BD5BF5F002244E4 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		84447AE32BD8F98F007D6C87 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		84447AEF2BD930A8007D6C87 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 			children = (
 				84B3636A2C49D2BC00698DF6 /* ImageCacheManager.swift */,
 				0B88EF7D2C5D969900395BC0 /* ImageSaver.swift */,
+				0B88EF802C5EEAAB00395BC0 /* ImageCachingWithCombine.swift */,
 			);
 			path = ImageDataProcessing;
 			sourceTree = "<group>";
@@ -226,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				845A31CF2C45D280003E4B76 /* CuttedFaceImageModel.swift */,
+				0B88EF822C5EEB6300395BC0 /* CachingKeys.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -474,6 +480,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848134912C0A7D3C001424C0 /* Constants.swift in Sources */,
+				0B88EF812C5EEAAB00395BC0 /* ImageCachingWithCombine.swift in Sources */,
 				84447B072BE93048007D6C87 /* PhotoMainCoordinator.swift in Sources */,
 				84B3636B2C49D2BC00698DF6 /* ImageCacheManager.swift in Sources */,
 				84EF58492C0E7509002CEDE6 /* CustomButton.swift in Sources */,
@@ -497,6 +504,7 @@
 				84447AFF2BE91BBF007D6C87 /* TabBarCoordinator.swift in Sources */,
 				84447AF62BE8CF8C007D6C87 /* FaceMainViewController.swift in Sources */,
 				8481348B2BF01AF2001424C0 /* TabBarPages.swift in Sources */,
+				0B88EF832C5EEB6300395BC0 /* CachingKeys.swift in Sources */,
 				848134882BEE062B001424C0 /* ProfileViewModel.swift in Sources */,
 				84447B0C2BEE0327007D6C87 /* FaceMainViewModel.swift in Sources */,
 				847BD0512BCB219200070656 /* SceneDelegate.swift in Sources */,

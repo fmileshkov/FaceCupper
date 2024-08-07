@@ -4,7 +4,7 @@ import PhotosUI
 class FaceMainViewController: UIViewController, CustomImagePickerDelegate {
     
     @IBOutlet private weak var pickFaceFromGallery: CustomButton!
-    
+
     var viewModel: FaceMainViewModelProtocol?
     
     override func viewDidLoad() {

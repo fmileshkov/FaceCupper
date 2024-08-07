@@ -16,23 +16,23 @@ class CustomImagePickerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
-//        Task {
-//            await fetchImages()
-//        }
         fetchImages()
     }
     
     private func fetchImages() {
-        FirestoreService.shared.fetchImagesWithCombine(folderPath: "images")
-            .sink(receiveCompletion: { completion in
-                if case let .failure(error) = completion {
-                    print("Error fetching images: \(error)")
+        FirestoreService.shared.fetchImages(folderPath: "images")
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    print(">>> weve got and error - \(error.localizedDescription)")
+                case .finished:
+                    break
                 }
-            }, receiveValue: { imageModels in
-                self.images = imageModels
-                self.collectionView.reloadData()
-            })
-            .store(in: &cancellables)
+            } receiveValue: { [weak self] imageModels in
+                print("get image \(imageModels[0].displayTitle)")
+                self?.images = imageModels
+                self?.collectionView.reloadData()
+            }.store(in: &cancellables)
     }
     
     private func setupCollectionView() {
@@ -78,16 +78,16 @@ extension CustomImagePickerViewController: UICollectionViewDataSource, UICollect
             return UICollectionViewCell()
         }
         
-        guard let cachedImage = ImageCacheManager.shared.cachedImage else {
-            cell.configure(with: images[indexPath.row])
-            ImageCacheManager.shared.saveImage(cell.fetchImage(with: images[indexPath.row].url), for: images[indexPath.row].url.absoluteString)
-            
-            return cell as? CustomCollectionViewCell ?? UICollectionViewCell()
-        }
-        // this saves only the first image and after that cachedImage != nil so it continues..
-//        cell.configure(with: images[indexPath.row])
-        cell.setUpImage(with: cachedImage)
-        cell.setUpTitle(for: images[indexPath.row].displayTitle)
+//        guard let cachedImage = ImageCacheManager.shared.cachedImage else {
+//            cell.configure(with: images[indexPath.row])
+//            ImageCacheManager.shared.saveImage(cell.fetchImage(with: images[indexPath.row].url), for: images[indexPath.row].url.absoluteString)
+//            
+//            return cell as? CustomCollectionViewCell ?? UICollectionViewCell()
+//        }
+
+        cell.configure(with: images[indexPath.row])
+//        cell.setUpImage(with: cachedImage)
+//        cell.setUpTitle(for: images[indexPath.row].displayTitle)
         
         return cell as? CustomCollectionViewCell ?? UICollectionViewCell()
     }
